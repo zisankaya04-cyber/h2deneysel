@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Analiz Sonucu</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    text-align:center;
+    margin:0;
+    padding-top:100px;
+
+    background-image:url("arkaplan.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    height:100vh;
+}
+
+#result{
+    font-size:24px;
+    color:black;
+    text-shadow:1px 1px 5px rgba(0,0,0,0.7);
+}
+
+/* SONUÇ ARKA PLANI */
+.resultBox{
+    display:inline-block;
+    padding:20px 30px;
+    background:rgba(255,255,255,0.65); /* yarı saydam */
+    border-radius:10px;
+}
+
+/* BUTON */
+#playButton{
+    padding:10px 20px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+/* animasyon */
+
+@keyframes pulse{
+    0%{opacity:0.3;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.05);}
+    100%{opacity:0.3;transform:scale(1);}
+}
+
+#animText{
+    animation:pulse 1s infinite;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="result">
+<div class="resultBox">
+<span id="animText">Katılım verileri işleniyor</span>
+<span id="dots"></span>
+</div>
+</div>
+
+<br>
+
+<button id="playButton">Müziği Başlat</button>
+
+<audio id="myAudio" src="m.mp3" preload="auto"></audio>
+
+<script>
+
+const texts = [
+"Katılım verileri işleniyor...",
+"Algoritmik analiz başlatıldı...",
+"Veriler karşılaştırılıyor...",
+"İstatistiksel değerlendirme yapılıyor...",
+"Sonuçlar hazırlanıyor..."
+];
+
+let index = 0;
+const textElement = document.getElementById("animText");
+const dots = document.getElementById("dots");
+
+let dotCount = 0;
+
+const dotInterval = setInterval(()=>{
+    dotCount=(dotCount+1)%4;
+    dots.innerText='.'.repeat(dotCount);
+},500);
+
+
+/* yazı değişimi */
+
+const textInterval=setInterval(()=>{
+    index++;
+    if(index<texts.length){
+        textElement.innerText=texts[index];
+    }
+},30000);
+
+
+/* 3 dakika sonra sonuç */
+
+setTimeout(()=>{
+
+clearInterval(dotInterval);
+clearInterval(textInterval);
+
+document.querySelector(".resultBox").innerText=
+"Yapılan analizler sonucunda katılım sağlayan kişiler arasında ortalamanın altındasınız";
+
+},180000);
+
+
+/* MÜZİK */
+
+const playButton=document.getElementById("playButton");
+const audio=document.getElementById("myAudio");
+
+playButton.addEventListener("click",()=>{
+    audio.play();
+    playButton.style.display="none"; // buton kaybolur
+});
+
+</script>
+
+</body>
+</html>
